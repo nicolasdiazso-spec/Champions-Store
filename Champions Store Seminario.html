@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Champions Store | Uniformes de fútbol</title>
+<meta name="description" content="Camisetas de los mejores clubes de Europa con tu nombre y número. Pedidos para equipos y aficionados en toda Colombia.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<script>
+  // Aplica el tema guardado (o el del sistema) antes de pintar la página
+  (function () {
+    var saved = localStorage.getItem('tema');
+    var dark = saved ? saved === 'oscuro' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    document.documentElement.classList.toggle('dark', dark);
+  })();
+</script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    darkMode: 'class',
+    theme: {
+      extend: {
+        fontFamily: {
+          display: ['"Barlow Condensed"', 'Impact', 'sans-serif'],
+          sans: ['"DM Sans"', 'system-ui', 'sans-serif']
+        },
+        colors: {
+          // 60 % neutro: paper (claro) y navy-900 (oscuro)
+          paper: '#F3F5FA',
+          // 30 % color de marca: azul oscuro
+          navy: { 900: '#050E26', 800: '#0A1A45', 700: '#0F2A6B', 600: '#16399A' },
+          // 10 % acento
+          gold: '#372AAC'
+        }
+      }
+    }
+  };
+</script>
+<style>
+  .num-outline { -webkit-text-stroke: 3px rgba(255,255,255,.16); color: transparent; }
+  .jersey-body { fill: var(--c); }
+.jersey-sleeve { fill: var(--s); }
+.jersey-body, .jersey-sleeve { stroke: rgb(15 42 107 / .35); stroke-width: 1; stroke-linejoin: round; }
+.dark .jersey-body, .dark .jersey-sleeve { stroke: rgb(255 255 255 / .35); }
+  .jersey-collar { fill: none; stroke: var(--k); stroke-width: 3; }
+  .jersey-text { fill: var(--k); font-family: "Barlow Condensed", Impact, sans-serif; font-weight: 800; text-anchor: middle; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto !important; } }
+  html { scroll-behavior: smooth; }
+</style>
+</head>
+<body class="bg-paper font-sans text-navy-900 antialiased dark:bg-navy-900 dark:text-slate-100">
+
+<!-- Plantilla de camiseta (se reutiliza con <use>) -->
+<svg width="0" height="0" class="absolute" aria-hidden="true">
+  <symbol id="jersey" viewBox="0 0 100 100">
+    <path class="jersey-sleeve" d="M30 8 L10 20 L2 42 L16 48 L24 36 Z"/>
+    <path class="jersey-sleeve" d="M70 8 L90 20 L98 42 L84 48 L76 36 Z"/>
+    <path class="jersey-body" d="M30 8 C34 17 66 17 70 8 L76 36 L76 92 L24 92 L24 36 Z"/>
+    <path class="jersey-collar" d="M30 8 C34 17 66 17 70 8"/>
+  </symbol>
+</svg>
+
+<header class="sticky top-0 z-20 bg-navy-700 text-white dark:bg-navy-800">
+  <nav class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3" aria-label="Principal">
+    <a href="#inicio" class="font-display text-2xl font-extrabold tracking-wide">Champions <span class="text-gold">Store</span></a>
+    <div class="flex items-center gap-2 sm:gap-6">
+      <a href="#catalogo" class="hidden text-sm font-medium hover:text-gold sm:inline">Catálogo</a>
+      <a href="#ventajas" class="hidden text-sm font-medium hover:text-gold sm:inline">Por qué elegirnos</a>
+      <a href="#pedido" class="hidden text-sm font-medium hover:text-gold sm:inline">Hacer pedido</a>
+      <button id="tema" type="button" aria-pressed="false"
+        class="rounded-md border border-white/30 px-3 py-1.5 text-sm font-medium hover:border-gold hover:text-gold focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold">
+        Modo oscuro
+      </button>
+    </div>
+  </nav>
+</header>
+
+<main id="inicio">
+  <!-- Hero -->
+  <section class="relative overflow-hidden bg-navy-700 text-white dark:bg-navy-800">
+    <span class="num-outline pointer-events-none absolute -right-4 -top-10 select-none font-display text-[22rem] font-extrabold leading-none sm:text-[32rem]" aria-hidden="true">10</span>
+    <div class="relative mx-auto max-w-6xl px-4 py-20 sm:py-28">
+      <h1 class="max-w-2xl font-display text-6xl font-extrabold leading-[0.95] sm:text-8xl">Tu número.<br>Tu camiseta.</h1>
+      <p class="mt-6 max-w-md text-lg text-slate-200">Uniformes de fútbol para equipos y aficionados. Cada pedido sale con tu nombre y tu número estampados.</p>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a href="#catalogo" class="rounded-md bg-gold px-6 py-3 font-bold text-white hover:brightness-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">Ver camisetas</a>
+        <a href="#pedido" class="rounded-md border border-white/40 px-6 py-3 font-bold hover:border-gold hover:text-gold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white">Personalizar mi pedido</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Catálogo -->
+  <section id="catalogo" class="mx-auto max-w-6xl scroll-mt-16 px-4 py-16">
+    <h2 class="font-display text-4xl font-bold text-navy-700 dark:text-white sm:text-5xl">Catálogo</h2>
+    <p class="mt-2 text-slate-600 dark:text-slate-300">Elige tu club y personalízalo en el formulario.</p>
+    <div id="filtros" class="mt-6 flex flex-wrap gap-2" role="group" aria-label="Filtrar por categoría"></div>
+    <div id="grid" class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3"></div>
+  </section>
+
+  <!-- Ventajas -->
+  <section id="ventajas" class="scroll-mt-16 border-y border-navy-700/10 bg-white py-16 dark:border-white/10 dark:bg-navy-800/50">
+    <div class="mx-auto grid max-w-6xl gap-10 px-4 md:grid-cols-3">
+      <div>
+        <h3 class="font-display text-2xl font-bold text-navy-700 dark:text-gold">Estampado incluido</h3>
+        <p class="mt-2 text-slate-600 dark:text-slate-300">Nombre y número van en la espalda sin costo adicional, desde la primera camiseta.</p>
+      </div>
+      <div>
+        <h3 class="font-display text-2xl font-bold text-navy-700 dark:text-gold">Pedidos para equipos</h3>
+        <p class="mt-2 text-slate-600 dark:text-slate-300">Uniformes completos para tu club, colegio o empresa, con precio por cantidad.</p>
+      </div>
+      <div>
+        <h3 class="font-display text-2xl font-bold text-navy-700 dark:text-gold">Envío a toda Colombia</h3>
+        <p class="mt-2 text-slate-600 dark:text-slate-300">Despachamos a cualquier ciudad y te avisamos por WhatsApp cuando salga tu pedido.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pedido -->
+  <section id="pedido" class="mx-auto grid max-w-6xl scroll-mt-16 gap-10 px-4 py-16 lg:grid-cols-[1fr_320px]">
+    <div>
+      <h2 class="font-display text-4xl font-bold text-navy-700 dark:text-white sm:text-5xl">Haz tu pedido</h2>
+      <p class="mt-2 text-slate-600 dark:text-slate-300">Los campos con * son obligatorios.</p>
+
+      <div id="exito" role="status" class="mt-6 hidden rounded-md border border-green-600/40 bg-green-50 p-4 text-green-900 dark:bg-green-900/30 dark:text-green-100"></div>
+
+      <form id="form" novalidate class="mt-6 grid gap-5 sm:grid-cols-2">
+        <div class="sm:col-span-2">
+          <label for="nombre" class="block text-sm font-bold">Nombre completo *</label>
+          <input id="nombre" name="nombre" type="text" autocomplete="name" class="campo" aria-describedby="err-nombre">
+          <p id="err-nombre" class="error" aria-live="polite"></p>
+        </div>
+        <div>
+          <label for="correo" class="block text-sm font-bold">Correo electrónico *</label>
+          <input id="correo" name="correo" type="email" autocomplete="email" class="campo" aria-describedby="err-correo">
+          <p id="err-correo" class="error" aria-live="polite"></p>
+        </div>
+        <div>
+          <label for="telefono" class="block text-sm font-bold">Celular *</label>
+          <input id="telefono" name="telefono" type="tel" inputmode="numeric" autocomplete="tel" placeholder="3001234567" class="campo" aria-describedby="err-telefono">
+          <p id="err-telefono" class="error" aria-live="polite"></p>
+        </div>
+        <div>
+          <label for="producto" class="block text-sm font-bold">Camiseta *</label>
+          <select id="producto" name="producto" class="campo" aria-describedby="err-producto"></select>
+          <p id="err-producto" class="error" aria-live="polite"></p>
+        </div>
+        <div>
+          <label for="talla" class="block text-sm font-bold">Talla *</label>
+          <select id="talla" name="talla" class="campo" aria-describedby="err-talla">
+            <option value="">Elige una talla</option>
+            <option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option>
+          </select>
+          <p id="err-talla" class="error" aria-live="polite"></p>
+        </div>
+        <div>
+          <label for="nombreEspalda" class="block text-sm font-bold">Nombre en la espalda</label>
+          <input id="nombreEspalda" name="nombreEspalda" type="text" maxlength="12" placeholder="Hasta 12 letras" class="campo" aria-describedby="err-nombreEspalda">
+          <p id="err-nombreEspalda" class="error" aria-live="polite"></p>
+        </div>
+        <div>
+          <label for="numero" class="block text-sm font-bold">Número (0 a 99)</label>
+          <input id="numero" name="numero" type="number" min="0" max="99" class="campo" aria-describedby="err-numero">
+          <p id="err-numero" class="error" aria-live="polite"></p>
+        </div>
+        <div>
+          <label for="cantidad" class="block text-sm font-bold">Cantidad *</label>
+          <input id="cantidad" name="cantidad" type="number" min="1" max="20" value="1" class="campo" aria-describedby="err-cantidad">
+          <p id="err-cantidad" class="error" aria-live="polite"></p>
+        </div>
+        <div class="sm:col-span-2">
+          <button type="submit" class="rounded-md bg-gold px-8 py-3 font-bold text-white hover:brightness-110 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-navy-700 dark:focus-visible:outline-white">Enviar pedido</button>
+        </div>
+      </form>
+    </div>
+
+    <aside class="lg:sticky lg:top-24 lg:self-start" aria-label="Vista previa de la espalda">
+      <div class="rounded-lg bg-navy-700 p-6 text-center text-white dark:bg-navy-800">
+        <p class="font-display text-xl font-bold">Así se ve tu espalda</p>
+        <svg id="vista" viewBox="0 0 100 100" class="mx-auto mt-4 w-56" role="img" aria-label="Camiseta con nombre y número">
+          <use href="#jersey"/>
+          <text id="vNombre" class="jersey-text" x="50" y="38" font-size="8"></text>
+          <text id="vNumero" class="jersey-text" x="50" y="68" font-size="30"></text>
+        </svg>
+      </div>
+    </aside>
+  </section>
+</main>
+
+<footer class="bg-navy-700 py-10 text-center text-sm text-slate-200 dark:bg-navy-800">
+  <p class="font-display text-2xl font-extrabold text-white">Champions <span class="text-gold">Store</span></p>
+  <p class="mt-2">Neiva, Huila · Envíos a toda Colombia</p>
+  <p class="mt-1 text-slate-400">Proyecto académico sin fines comerciales. Sin relación con los clubes mencionados; no usa escudos ni marcas. Modelos y precios de ejemplo.</p>
+</footer>
+
+<style>
+  .campo { margin-top: .25rem; width: 100%; border-radius: .375rem; border: 1px solid rgb(15 42 107 / .3); background: #fff; padding: .6rem .75rem; color: #050E26; }
+  .campo:focus-visible { outline: 2px solid #372AAC; outline-offset: 1px; }
+  .campo[aria-invalid="true"] { border-color: #DC2626; }
+  .error { min-height: 1.25rem; margin-top: .25rem; font-size: .85rem; color: #B91C1C; }
+  .dark .campo { background: #0A1A45; border-color: rgb(255 255 255 / .25); color: #F1F5F9; }
+  .dark .error { color: #FCA5A5; }
+</style>
+
+<script>
+  // ---------- Datos de productos ----------
+  const productos = [
+    // Premier League
+    { id: 'arsenal',      nombre: 'Arsenal',           cat: 'premier', precio: 139900, c: '#EF0107', s: '#FFFFFF', k: '#FFFFFF', num: '7' },
+    { id: 'chelsea',      nombre: 'Chelsea',           cat: 'premier', precio: 139900, c: '#034694', s: '#02307A', k: '#FFFFFF', num: '10' },
+    { id: 'man-city',     nombre: 'Manchester City',   cat: 'premier', precio: 149900, c: '#6CABDD', s: '#FFFFFF', k: '#1C2C5B', num: '17' },
+    { id: 'man-united',   nombre: 'Manchester United', cat: 'premier', precio: 149900, c: '#DA291C', s: '#111111', k: '#FBE122', num: '7' },
+    { id: 'liverpool',    nombre: 'Liverpool',         cat: 'premier', precio: 139900, c: '#C8102E', s: '#C8102E', k: '#F6EB61', num: '11' },
+    // LaLiga
+    { id: 'barcelona',    nombre: 'FC Barcelona',      cat: 'laliga',  precio: 149900, c: '#004D98', s: '#A50044', k: '#EDBB00', num: '10' },
+    { id: 'real-madrid',  nombre: 'Real Madrid',       cat: 'laliga',  precio: 149900, c: '#FFFFFF', s: '#F1F1F1', k: '#00529F', num: '9' },
+    { id: 'atletico',     nombre: 'Atlético de Madrid', cat: 'laliga', precio: 139900, c: '#CB3524', s: '#272E61', k: '#FFFFFF', num: '19' },
+    // Otras ligas
+    { id: 'psg',          nombre: 'PSG',               cat: 'europa',  precio: 149900, c: '#004170', s: '#DA291C', k: '#FFFFFF', num: '7' },
+    { id: 'inter',        nombre: 'Inter de Milán',    cat: 'europa',  precio: 139900, c: '#0068A8', s: '#111111', k: '#FFFFFF', num: '10' },
+    { id: 'bayern',       nombre: 'Bayern Múnich',     cat: 'europa',  precio: 139900, c: '#DC052D', s: '#FFFFFF', k: '#0F2A6B', num: '9' },
+    { id: 'juventus',     nombre: 'Juventus',          cat: 'europa',  precio: 139900, c: '#FFFFFF', s: '#111111', k: '#111111', num: '10' }
+  ];
+  const categorias = [
+    { id: 'todas', nombre: 'Todas' }, { id: 'premier', nombre: 'Premier League' },
+    { id: 'laliga', nombre: 'LaLiga' }, { id: 'europa', nombre: 'Otras ligas' }
+  ];
+  const precioCOP = n => '$' + n.toLocaleString('es-CO');
+
+  // ---------- Modo oscuro ----------
+  const raiz = document.documentElement;
+  const btnTema = document.getElementById('tema');
+  function pintarBotonTema() {
+    const oscuro = raiz.classList.contains('dark');
+    btnTema.setAttribute('aria-pressed', oscuro);
+    btnTema.textContent = oscuro ? 'Modo claro' : 'Modo oscuro';
+  }
+  btnTema.addEventListener('click', () => {
+    raiz.classList.toggle('dark');
+    try { localStorage.setItem('tema', raiz.classList.contains('dark') ? 'oscuro' : 'claro'); } catch (e) {}
+    pintarBotonTema();
+  });
+  pintarBotonTema();
+
+  // ---------- Catálogo ----------
+  const grid = document.getElementById('grid');
+  const filtros = document.getElementById('filtros');
+  const select = document.getElementById('producto');
+
+  function estilosColor(p) { return `--c:${p.c};--s:${p.s};--k:${p.k}`; }
+
+  function pintarCatalogo(cat) {
+    const lista = cat === 'todas' ? productos : productos.filter(p => p.cat === cat);
+    grid.innerHTML = lista.map(p => `
+      <article class="overflow-hidden rounded-lg border border-navy-700/15 bg-white dark:border-white/10 dark:bg-navy-800">
+        <div class="bg-navy-700/5 p-6 dark:bg-white/5">
+          <svg viewBox="0 0 100 100" class="mx-auto w-40" style="${estilosColor(p)}" role="img" aria-label="Camiseta ${p.nombre}">
+            <use href="#jersey"/>
+            <text class="jersey-text" x="50" y="62" font-size="28">${p.num}</text>
+          </svg>
+        </div>
+        <div class="p-5">
+          <h3 class="font-display text-2xl font-bold text-navy-700 dark:text-white">${p.nombre}</h3>
+          <p class="text-sm text-slate-500 dark:text-slate-400">Camiseta titular</p>
+          <p class="mt-1 text-lg font-bold">${precioCOP(p.precio)}</p>
+          <button type="button" data-id="${p.id}" class="pedir mt-4 w-full rounded-md bg-navy-700 py-2.5 font-bold text-white hover:bg-navy-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold dark:bg-gold dark:text-white dark:hover:brightness-110">Pedir esta camiseta</button>
+        </div>
+      </article>`).join('');
+  }
+
+  function pintarFiltros(activo) {
+    filtros.innerHTML = categorias.map(c => {
+      const on = c.id === activo;
+      const clases = on
+        ? 'bg-navy-700 text-white dark:bg-gold dark:text-white'
+        : 'border border-navy-700/30 hover:border-navy-700 dark:border-white/30 dark:hover:border-gold';
+      return `<button type="button" data-cat="${c.id}" aria-pressed="${on}" class="rounded-full px-4 py-1.5 text-sm font-bold focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold ${clases}">${c.nombre}</button>`;
+    }).join('');
+  }
+
+  filtros.addEventListener('click', e => {
+    const b = e.target.closest('button[data-cat]');
+    if (!b) return;
+    pintarFiltros(b.dataset.cat);
+    pintarCatalogo(b.dataset.cat);
+  });
+
+  grid.addEventListener('click', e => {
+    const b = e.target.closest('.pedir');
+    if (!b) return;
+    select.value = b.dataset.id;
+    actualizarVista();
+    validarCampo('producto');
+    document.getElementById('pedido').scrollIntoView();
+    document.getElementById('nombre').focus({ preventScroll: true });
+  });
+
+  select.innerHTML = '<option value="">Elige un club</option>' +
+    productos.map(p => `<option value="${p.id}">${p.nombre} (${precioCOP(p.precio)})</option>`).join('');
+
+  pintarFiltros('todas');
+  pintarCatalogo('todas');
+
+  // ---------- Vista previa de la espalda ----------
+  const vista = document.getElementById('vista');
+  function actualizarVista() {
+    const p = productos.find(x => x.id === select.value) || productos[0];
+    vista.setAttribute('style', estilosColor(p));
+    document.getElementById('vNombre').textContent = document.getElementById('nombreEspalda').value.toUpperCase();
+    document.getElementById('vNumero').textContent = document.getElementById('numero').value;
+  }
+  ['producto', 'nombreEspalda', 'numero'].forEach(id => document.getElementById(id).addEventListener('input', actualizarVista));
+  actualizarVista();
+
+  // ---------- Validación del formulario ----------
+  const reglas = {
+    nombre: v => v.trim().length < 3 ? 'Escribe tu nombre completo (mínimo 3 letras).' : '',
+    correo: v => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()) ? '' : 'Escribe un correo válido, por ejemplo nombre@correo.com.',
+    telefono: v => /^3\d{9}$/.test(v.trim()) ? '' : 'Escribe un celular colombiano de 10 dígitos que empiece por 3.',
+    producto: v => v ? '' : 'Elige la camiseta que quieres.',
+    talla: v => v ? '' : 'Elige una talla.',
+    nombreEspalda: v => /^[A-Za-zÁÉÍÓÚÑáéíóúñ ]{0,12}$/.test(v) ? '' : 'Usa solo letras, hasta 12 caracteres.',
+    numero: v => v === '' || (Number.isInteger(+v) && +v >= 0 && +v <= 99) ? '' : 'El número debe estar entre 0 y 99.',
+    cantidad: v => Number.isInteger(+v) && +v >= 1 && +v <= 20 ? '' : 'La cantidad debe estar entre 1 y 20.'
+  };
+
+  function validarCampo(id) {
+    const campo = document.getElementById(id);
+    const msg = reglas[id](campo.value);
+    document.getElementById('err-' + id).textContent = msg;
+    campo.setAttribute('aria-invalid', msg ? 'true' : 'false');
+    return !msg;
+  }
+
+  Object.keys(reglas).forEach(id => {
+    const campo = document.getElementById(id);
+    campo.addEventListener('blur', () => validarCampo(id));
+    campo.addEventListener('input', () => { if (campo.getAttribute('aria-invalid') === 'true') validarCampo(id); });
+  });
+
+  document.getElementById('form').addEventListener('submit', e => {
+    e.preventDefault();
+    const resultados = Object.keys(reglas).map(validarCampo);
+    const exito = document.getElementById('exito');
+    if (resultados.includes(false)) {
+      exito.classList.add('hidden');
+      const primero = Object.keys(reglas).find(id => document.getElementById(id).getAttribute('aria-invalid') === 'true');
+      document.getElementById(primero).focus();
+      return;
+    }
+    const nombre = document.getElementById('nombre').value.trim().split(' ')[0];
+    const p = productos.find(x => x.id === select.value);
+    const cant = +document.getElementById('cantidad').value;
+    exito.textContent = `¡Gracias, ${nombre}! Recibimos tu pedido de ${cant} × ${p.nombre}. Total: ${precioCOP(p.precio * cant)}. Te escribiremos al correo para confirmar.`;
+    exito.classList.remove('hidden');
+    exito.scrollIntoView({ block: 'center' });
+    e.target.reset();
+    Object.keys(reglas).forEach(id => document.getElementById(id).setAttribute('aria-invalid', 'false'));
+    actualizarVista();
+  });
+</script>
+</body>
+</html>
